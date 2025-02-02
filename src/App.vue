@@ -52,8 +52,8 @@
        <div id="unabhaengigkeitsrechner" v-if="currentScreen === 'unabhaengigkeitsrechner'">
      <URechner />
    </div>
-   <div v-if="currentScreen === 'solarrechner'">
-      <SolarFunnel />
+   <div v-if="currentScreen === 'solarrechner' && solarStep !== 'intro'">
+    <SolarFunnel />
     </div>
 
    <MaterialComponent v-model:dialog="showDialog" />
