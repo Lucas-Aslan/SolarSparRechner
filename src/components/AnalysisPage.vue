@@ -215,12 +215,12 @@ export default {
       // Beispielhafter POST-Request an dein Backend
       // Passe die URL an deine IP/Domain + Port an
       axios
-        .post("http://159.69.243.29:3000/api/submitFunnel", this.funnelData)
-        // .then((response) => {
-        //   console.log("Erfolg:", response.data);
-        //   alert("Daten erfolgreich versendet!");
-        //   // Hier könntest du ggf. navigieren oder Felder leeren
-        // })
+        .post("/api/submitFunnel", this.funnelData)
+        .then((response) => {
+          console.log("Erfolg:", response.data);
+          alert("Daten erfolgreich versendet!");
+          // Hier könntest du ggf. navigieren oder Felder leeren
+        })
         .catch((error) => {
           console.error("Fehler:", error);
           alert("Fehler beim Versenden der Daten");

@@ -22,11 +22,14 @@
           <h4>Vertreten durch:</h4>
           <p>Liza Dulger</p>
 
-          <h4>Umsatzsteuer-ID:</h4>
-          <p>DE123456789</p>
+          <h4>USt-ID:</h4>
+          <p>DE449624973</p>
+
+          <h4>Steuernummer:</h4>
+          <p>207/5737/2539</p>
 
           <h4>Verantwortlich für den Inhalt:</h4>
-          <p>Max Mustermann</p>
+          <p>nach § 55 Abs. 2 RStV</p>
 
           <h4>Haftung für Inhalte:</h4>
           <p>Die Inhalte wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte übernehmen wir keine Gewähr.</p>

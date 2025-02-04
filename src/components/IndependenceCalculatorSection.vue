@@ -8,52 +8,45 @@
       </h1>
     </div>
 
-    <!-- CTA-Bereich mit Logos links, Text in der Mitte, Siegel rechts -->
     <v-container class="cta-container text-center">
-      <v-row align="center">
-        <!-- Linke Spalte mit Logos -->
-        <v-col cols="3" md="2" class="d-flex flex-column align-center">
-          <img :src="require('@/assets/EE_Logo.webp')" alt="EE Logo" class="logo-image">
-          <img :src="require('@/assets/DEN_Logo.webp')" alt="DEN Logo" class="logo-image">
-          <img :src="require('@/assets/KFW.webp')" alt="KFW Logo" class="logo-image">
-        </v-col>
+  <v-row align="center" justify="center">
+    <!-- Linke Logos: Nur auf Desktop anzeigen -->
+    <v-col v-if="!isMobile" cols="3" md="2" class="d-flex flex-column align-center">
+      <img :src="require('@/assets/EE_Logo.webp')" alt="EE Logo" class="logo-image">
+      <img :src="require('@/assets/DEN_Logo.webp')" alt="DEN Logo" class="logo-image">
+      <img :src="require('@/assets/KFW.webp')" alt="KFW Logo" class="logo-image">
+    </v-col>
 
-        <!-- Mittlere Spalte mit Text & Button -->
-        <v-col cols="6" md="8">
-          <h2 class="cta-heading">Sichern Sie sich Ihre kostenlose Solar-Analyse!</h2>
-          <p class="cta-subtext">
-            Mehr als <strong>10.000 zufriedene Nutzer</strong> sparen bereits bis zu 40% an Stromkosten.
-          </p>
+    <!-- Mittlerer Text-Bereich -->
+    <v-col cols="12" md="8" class="d-flex flex-column justify-center align-center">
+      <h2 class="cta-heading">Sichern Sie sich Ihre kostenlose Solar-Analyse!</h2>
+      <p class="cta-subtext">
+        Mehr als <strong>10.000 zufriedene Nutzer</strong> sparen bereits bis zu 40% an Stromkosten.
+      </p>
+      <p class="cta-guarantee">
+        <v-icon color="white">mdi-check-circle</v-icon> 100% kostenlose Berechnung – in nur 2 Minuten!
+      </p>
+      <p class="cta-countdown">
+        <v-icon color="red">mdi-clock-outline</v-icon> Aktion endet in: <span>{{ countdown }}</span>
+      </p>
+      <div class="cta-button-wrapper">
+        <v-btn color="success" large elevation="2" class="cta-button"
+          @click="$emit('navigate', 'solarrechner')"
+          aria-label="Zum Solarrechner">
+          <span class="button-text">
+            Jetzt <span class="button-break">Sparpotenzial berechnen</span>
+          </span>
+        </v-btn>
+      </div>
+    </v-col>
 
-          <!-- Garantien -->
-          <p class="cta-guarantee">
-            <v-icon color="white">mdi-check-circle</v-icon> 100% kostenlose Berechnung – in nur 2 Minuten!
-          </p>
+    <!-- Siegel: Nur auf Desktop anzeigen -->
+    <v-col v-if="!isMobile" cols="3" md="2" class="cta-seal-col d-flex justify-center align-center">
+      <img :src="require('@/assets/SSP_Siegel.webp')" alt="Top 2024 Siegel" class="siegel-bild">
+    </v-col>
+  </v-row>
+</v-container>
 
-          <!-- Countdown -->
-          <p class="cta-countdown">
-            <v-icon color="red">mdi-clock-outline</v-icon>
-            Aktion endet in: <span>{{ countdown }}</span>
-          </p>
-
-          <!-- CTA Button -->
-          <div class="cta-button-wrapper">
-            <v-btn color="success" large elevation="2" class="cta-button"
-              @click="$emit('navigate', 'solarrechner')"
-              aria-label="Zum Solarrechner">
-              <span class="button-text">
-                Jetzt <span class="button-break">Sparpotenzial berechnen</span>
-              </span>
-            </v-btn>
-          </div>
-        </v-col>
-
-        <!-- Rechte Spalte mit Siegel -->
-        <v-col cols="3" md="2" class="cta-seal-col d-flex justify-center align-center">
-          <img :src="require('@/assets/SSP_Siegel.webp')" alt="Top 2024 Siegel" class="siegel-bild">
-        </v-col>
-      </v-row>
-    </v-container>
 
     <!-- Container für Rechner (unverändert) -->
     <v-container class="py-12 px-6" fluid>
@@ -106,15 +99,19 @@
 
 <script>
 export default {
-  name: "IndependenceCalculatorSection",
   data() {
     return {
       countdown: "12 Stunden, 59 Minuten, 59 Sekunden",
-      timeLeft: 12 * 60 * 60 + 59 * 60 + 59, // Startzeit in Sekunden
+      timeLeft: 12 * 60 * 60 + 59 * 60 + 59,
+      isMobile: window.innerWidth <= 600
     };
   },
   mounted() {
     this.startCountdown();
+    window.addEventListener("resize", this.checkMobile);
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.checkMobile);
   },
   methods: {
     startCountdown() {
@@ -128,9 +125,13 @@ export default {
         }
       }, 1000);
     },
-  },
+    checkMobile() {
+      this.isMobile = window.innerWidth <= 600;
+    }
+  }
 };
 </script>
+
 
 <style scoped>
 /* Hintergrund */
@@ -265,10 +266,17 @@ export default {
 /* -----------------------------
  *  Responsive (max-width: 600px)
  * ----------------------------- */
-@media (max-width: 600px) {
-  .independence-section {
-    padding-top: 100px;
-    padding-bottom: 50px;
+ @media (max-width: 600px) {
+  .cta-container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-button-wrapper {
+    display: flex;
+    justify-content: center;
   }
 
   .slogan-container h1 {
@@ -299,6 +307,10 @@ export default {
   .cta-countdown {
     font-size: 0.8rem;
   }
+  .text-h5 {
+  color: white !important;
+  font-size: 10px;
+}
 
   /* Hier wird das Button-Layout angepasst */
   .cta-button {

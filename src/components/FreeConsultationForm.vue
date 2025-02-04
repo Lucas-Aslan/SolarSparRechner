@@ -239,7 +239,7 @@ export default {
         };
 
         const response = await axios.post(
-          'http://159.69.243.29:3000/api/submitForm',
+          '/api/submitForm',
           formData
         );
 
