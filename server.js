@@ -182,6 +182,49 @@ app.post('/api/submitFunnel', async (req, res) => {
     }
 });
 
+
+app.post('/api/submitContact', async (req, res) => {
+    const { email, phoneNumber } = req.body;
+  
+    const mailOptions = {
+      from: '"Solarrex Contact" <info@solarrex.de>',
+      to: 'info@solarrex.de',
+      subject: 'Neue Kontaktanfrage',
+      text: `
+        E-Mail: ${email}
+        Telefon: ${phoneNumber}
+      `,
+    };
+  
+    try {
+      await transporter.sendMail(mailOptions);
+      
+      const leadData = {
+        firstName: '',
+        lastName: '',
+        fullName: '',
+        plz: '',
+        stromverbrauch: '',
+        dachtyp: '',
+        pkw: '',
+        email,
+        phone: '',
+        phoneNumber,
+        street: '',
+        houseNumber: '',
+        postalCode: '',
+        city: '',
+      };
+  
+      await addLeadToExcel(leadData, 'Contact');
+      res.status(200).json({ message: 'Kontaktanfrage erfolgreich versendet.' });
+    } catch (error) {
+      console.error('Fehler beim Versenden der Kontaktanfrage:', error);
+      res.status(500).json({ message: 'Fehler beim Versenden der Kontaktanfrage.' });
+    }
+  });
+  
+
 app.listen(PORT, () => {
     console.log(`Server laeuft auf http://localhost:${PORT}`);
 });

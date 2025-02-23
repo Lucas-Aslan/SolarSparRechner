@@ -88,6 +88,8 @@
 
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
@@ -120,7 +122,20 @@ export default {
         email: this.email,
         phoneNumber: this.phoneNumber,
       };
-      this.$emit("next", contactData);
+
+      // Sende die Kontaktdaten per POST-Request an dein Backend
+      axios
+        .post("/api/submitContact", contactData)
+        .then((response) => {
+          console.log("Erfolg:", response.data);
+          alert("Daten erfolgreich versendet!");
+          // Falls du dennoch das Event emittieren möchtest:
+          this.$emit("next", contactData);
+        })
+        .catch((error) => {
+          console.error("Fehler:", error);
+          alert("Fehler beim Versenden der Daten");
+        });
     },
   },
 };
