@@ -21,13 +21,10 @@
     <v-col cols="12" md="8" class="d-flex flex-column justify-center align-center">
       <h2 class="cta-heading">Sichern Sie sich Ihre kostenlose Solar-Analyse!</h2>
       <p class="cta-subtext">
-        Mehr als <strong>10.000 zufriedene Nutzer</strong> sparen bereits bis zu 40% an Stromkosten.
+        Mehr als <strong>100.000 zufriedene Nutzer</strong> sparen bereits bis zu 92% an Stromkosten.
       </p>
       <p class="cta-guarantee">
-        <v-icon color="white">mdi-check-circle</v-icon> 100% kostenlose Berechnung – in nur 2 Minuten!
-      </p>
-      <p class="cta-countdown">
-        <v-icon color="red">mdi-clock-outline</v-icon> Aktion endet in: <span>{{ countdown }}</span>
+        <v-icon color="white">mdi-check-circle</v-icon> 100% kostenlose Berechnung – in unter 2 Minuten!
       </p>
       <div class="cta-button-wrapper">
         <v-btn color="success" large elevation="2" class="cta-button"

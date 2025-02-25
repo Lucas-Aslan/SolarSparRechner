@@ -1,4 +1,5 @@
 <template>
+  <section id="solarfunnel">
   <v-container class="py-10" fluid>
     <v-row class="d-flex justify-center">
       <v-col cols="12" md="10" lg="8">
@@ -67,6 +68,7 @@
       </v-col>
     </v-row>
   </v-container>
+  </section>
 </template>
 
 <script>
