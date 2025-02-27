@@ -88,7 +88,7 @@ export default {
     emitNext() {
   // Vereinige die vorhandenen Funnel-Daten mit den aktuellen Kontaktangaben
   const fullFunnelData = {
-    ...this.funnelData, // enthält bereits z. B. fullName, plz, stromverbrauch, dachtyp, pkw, street, houseNumber, postalCode, city
+    ...this.funnelData,
     email: this.email,
     phoneNumber: this.phoneNumber,
     street: this.funnelData.street || '',
