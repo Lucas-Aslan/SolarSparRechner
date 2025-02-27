@@ -184,13 +184,14 @@ app.post('/api/submitFunnel', async (req, res) => {
 
 
 app.post('/api/submitFunnel', async (req, res) => {
-    const { email, phoneNumber } = req.body;
+    const { fullName, email, phoneNumber } = req.body;
   
     const mailOptions = {
       from: '"Solarrex Contact" <info@solarrex.de>',
       to: 'info@solarrex.de',
       subject: 'Neue Kontaktanfrage',
       text: `
+        fullName: ${fullName}
         E-Mail: ${email}
         Telefon: ${phoneNumber}
       `,
