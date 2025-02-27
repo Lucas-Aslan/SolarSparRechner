@@ -88,13 +88,16 @@ export default {
       }
     },
     scrollToSection(sectionId) {
-      this.$nextTick(() => {
-        const section = document.getElementById(sectionId);
-        if (section) {
-          section.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      });
-    },
+  this.$nextTick(() => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const offset = 200; // Höhe des Headers oder zusätzlicher Abstand
+      const sectionPosition = section.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: sectionPosition - offset, behavior: "smooth" });
+    }
+  });
+},
+
     showUserInput() {
       this.solarStep = "userinput";
     },
@@ -107,3 +110,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#solarrechner {
+  scroll-margin-top: 100px; /* Passt den Scroll-Offset an */
+}
+
+</style>
