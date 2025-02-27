@@ -183,42 +183,37 @@ app.post('/api/submitFunnel', async (req, res) => {
 });
 
 
-// Endpunkt für den Kontakt (nun mit eigenem Pfad, aber denselben Daten)
-app.post('/api/submitContact', async (req, res) => {
-    console.log('Contact req.body:', req.body);
-    const {
-        fullName,
-        plz,
-        stromverbrauch,
-        dachtyp,
-        pkw,
-        email,
-        phoneNumber,
-        street,
-        houseNumber,
-        postalCode,
-        city,
-    } = req.body;
+app.post('/api/submitFunnel', async (req, res) => {
+    const { email, phoneNumber } = req.body;
   
     const mailOptions = {
       from: '"Solarrex Contact" <info@solarrex.de>',
       to: 'info@solarrex.de',
       subject: 'Neue Kontaktanfrage',
       text: `
-        Name: ${fullName || 'k.A.'}
-        PLZ: ${plz || 'k.A.'}
-        Stromverbrauch: ${stromverbrauch || 'k.A.'}
-        Dachtyp: ${dachtyp || 'k.A.'}
-        PKW-Fahrleistung: ${pkw || 'k.A.'}
-        E-Mail: ${email || 'k.A.'}
-        Telefon: ${phoneNumber || 'k.A.'}
-        Adresse: ${street || 'k.A.'} ${houseNumber || 'k.A.'}, ${postalCode || 'k.A.'} ${city || 'k.A.'}
+        E-Mail: ${email}
+        Telefon: ${phoneNumber}
       `,
     };
   
     try {
       await transporter.sendMail(mailOptions);
-      const leadData = { fullName, plz, stromverbrauch, dachtyp, pkw, email, phoneNumber, street, houseNumber, postalCode, city };
+      
+      const leadData = {
+        fullName: '',
+        plz: '',
+        stromverbrauch: '',
+        dachtyp: '',
+        pkw: '',
+        email,
+        phone: '',
+        phoneNumber,
+        street: '',
+        houseNumber: '',
+        postalCode: '',
+        city: '',
+      };
+  
       await addLeadToExcel(leadData, 'Contact');
       res.status(200).json({ message: 'Kontaktanfrage erfolgreich versendet.' });
     } catch (error) {
@@ -227,6 +222,7 @@ app.post('/api/submitContact', async (req, res) => {
     }
 });
 
+
 app.listen(PORT, () => {
-    console.log(`Server läuft auf http://localhost:${PORT}`);
+    console.log(`Server laeuft auf http://localhost:${PORT}`);
 });
