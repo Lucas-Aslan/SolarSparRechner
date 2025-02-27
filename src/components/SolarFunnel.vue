@@ -99,11 +99,15 @@ export default {
       funnelData: {
         fullName: "",
         plz: "",
-        stromverbrauch: null,
+        stromverbrauch: "",
         dachtyp: "",
-        pkw: null,
+        pkw: "",
         email: "",
-        phoneNumber: ""
+        phoneNumber: "",
+        street: "",
+        houseNumber: "",
+        postalCode: "",
+        city: ""
       }
     };
   },
@@ -163,18 +167,16 @@ export default {
     handleContactNext(contactData) {
       this.funnelData.email = contactData.email;
       this.funnelData.phoneNumber = contactData.phoneNumber;
-      // => Statt direkt zu analysis => erst Loading
+      // Gehe zu Loading, bevor du die Daten versendest
       this.currentStep = 'loading';
     },
 
-    // Schritt 7: Loading -> Warte 5 Sek, dann next => success
-    // In LoadingScreen.vue wirfst Du ein setTimeout => this.$emit('next')
+    // Schritt 7: Loading -> Warte 5 Sek, dann weiter zu Success
     handleLoadingDone() {
-      // Nach dem Timeout wechselt man zu success
       this.currentStep = 'success';
     },
 
-    // Schritt 8: Success -> Warte 5 Sek, dann next => analysis
+    // Schritt 8: Success -> Warte 5 Sek, dann weiter zu Analysis
     handleSuccessDone() {
       this.currentStep = 'analysis';
     },
