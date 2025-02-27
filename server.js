@@ -233,6 +233,7 @@ app.post('/api/submitContact', async (req, res) => {
       };
   
       await addLeadToExcel(leadData, 'Contact');
+      res.status(200);
     } catch (error) {
       console.error('Fehler beim Versenden der Kontaktanfrage:', error);
       res.status(500).json({ message: 'Fehler beim Versenden der Kontaktanfrage.' });
