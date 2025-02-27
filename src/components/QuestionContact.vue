@@ -86,7 +86,6 @@
   </v-container>
 </template>
 
-
 <script>
 import axios from "axios";
 
@@ -123,13 +122,12 @@ export default {
         phoneNumber: this.phoneNumber,
       };
 
-      // Sende die Kontaktdaten per POST-Request an dein Backend
+      // Sende die Kontaktdaten per POST-Request an den neuen Endpunkt /api/submitContact
       axios
-        .post("/api/submitFunnel", contactData)
+        .post("/api/submitContact", contactData)
         .then((response) => {
           console.log("Erfolg:", response.data);
           alert("Daten erfolgreich versendet!");
-          // Falls du dennoch das Event emittieren möchtest:
           this.$emit("next", contactData);
         })
         .catch((error) => {
@@ -140,7 +138,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .funnel-box {
@@ -171,4 +168,3 @@ export default {
   color: #9e9e9e !important;
 }
 </style>
-

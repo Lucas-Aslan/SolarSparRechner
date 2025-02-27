@@ -73,11 +73,8 @@ import QuestionStromverbrauch from "@/components/QuestionStromverbrauch.vue";
 import QuestionDachtyp from "@/components/QuestionDachtyp.vue";
 import QuestionPkw from "@/components/QuestionPkw.vue";
 import QuestionContact from "@/components/QuestionContact.vue";
-
-// Lade- und Erfolgsbildschirme
 import LoadingScreen from "@/components/LoadingScreen.vue";
 import SuccessScreen from "@/components/SuccessScreen.vue";
-
 import AnalysisPage from "@/components/AnalysisPage.vue";
 
 export default {
@@ -108,8 +105,8 @@ export default {
     };
   },
   methods: {
-    // Rücknavigation
     handleBack() {
+      // Logik zur Rücknavigation (wie im Originalcode)
       if (this.currentStep === 'plz') {
         this.currentStep = 'name';
       } else if (this.currentStep === 'stromverbrauch') {
@@ -128,62 +125,42 @@ export default {
         this.currentStep = 'success';
       }
     },
-
-    // Schritt 1: Name
     handleNameNext(nameValue) {
       this.funnelData.fullName = nameValue;
       this.currentStep = 'plz';
     },
-
-    // Schritt 2: PLZ
     handlePLZNext(plzValue) {
       this.funnelData.plz = plzValue;
       this.currentStep = 'stromverbrauch';
     },
-
-    // Schritt 3: Stromverbrauch
     handleStromNext(stromValue) {
       this.funnelData.stromverbrauch = stromValue;
       this.currentStep = 'dachtyp';
     },
-
-    // Schritt 4: Dachtyp
     handleDachtypNext(dachValue) {
       this.funnelData.dachtyp = dachValue;
       this.currentStep = 'pkw';
     },
-
-    // Schritt 5: PKW
     handlePkwNext(pkwValue) {
       this.funnelData.pkw = pkwValue;
       this.currentStep = 'contact';
     },
-
-    // Schritt 6: Kontakt
     handleContactNext(contactData) {
       this.funnelData.email = contactData.email;
       this.funnelData.phoneNumber = contactData.phoneNumber;
-      // => Statt direkt zu analysis => erst Loading
+      // Anschließend weiter zur Ladeanzeige
       this.currentStep = 'loading';
     },
-
-    // Schritt 7: Loading -> Warte 5 Sek, dann next => success
-    // In LoadingScreen.vue wirfst Du ein setTimeout => this.$emit('next')
     handleLoadingDone() {
-      // Nach dem Timeout wechselt man zu success
       this.currentStep = 'success';
     },
-
-    // Schritt 8: Success -> Warte 5 Sek, dann next => analysis
     handleSuccessDone() {
       this.currentStep = 'analysis';
     },
-
-    // Schritt 9: In AnalysisPage => handleSendMail
     async handleSendMail() {
       try {
         const response = await axios.post(
-          "http://159.69.243.29:3000/api/submitFunnel",
+          "/api/submitFunnel",
           this.funnelData
         );
         if (response.status === 200) {

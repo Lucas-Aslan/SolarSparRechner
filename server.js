@@ -1,7 +1,6 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const ExcelJS = require('exceljs');
 const fs = require('fs');
 require('dotenv').config();
@@ -26,8 +25,9 @@ const transporter = nodemailer.createTransport({
 const EXCEL_FILE = 'leads.xlsx';
 
 /**
- * @param {Object} leadData
- * @param {string} formType
+ * Speichert einen Lead in einer Excel-Datei.
+ * @param {Object} leadData 
+ * @param {string} formType 
  */
 async function addLeadToExcel(leadData, formType) {
     let workbook;
@@ -136,6 +136,7 @@ app.post('/api/submitForm', async (req, res) => {
     }
 });
 
+// Endpunkt für das komplette Funnel-Datenpaket
 app.post('/api/submitFunnel', async (req, res) => {
     console.log('req.body', req.body);
     const {
@@ -182,8 +183,8 @@ app.post('/api/submitFunnel', async (req, res) => {
     }
 });
 
-
-app.post('/api/submitFunnel', async (req, res) => {
+// Neuer Endpunkt für reine Kontaktanfragen (E-Mail + Telefonnummer)
+app.post('/api/submitContact', async (req, res) => {
     const { email, phoneNumber } = req.body;
   
     const mailOptions = {
@@ -221,7 +222,6 @@ app.post('/api/submitFunnel', async (req, res) => {
       res.status(500).json({ message: 'Fehler beim Versenden der Kontaktanfrage.' });
     }
 });
-
 
 app.listen(PORT, () => {
     console.log(`Server laeuft auf http://localhost:${PORT}`);
