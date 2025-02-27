@@ -113,7 +113,7 @@ export default {
 
 <style scoped>
 #solarrechner {
-  scroll-margin-top: 100px; /* Passt den Scroll-Offset an */
+  scroll-margin-top: 85px; /* Passt den Scroll-Offset an */
 }
 
 </style>
