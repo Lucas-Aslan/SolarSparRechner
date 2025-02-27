@@ -38,6 +38,7 @@
     <!-- Schritt 6: E-Mail + Telefon -->
     <QuestionContact
       v-else-if="currentStep === 'contact'"
+      :funnelData="funnelData" 
       @next="handleContactNext"
       @back="handleBack"
     />
