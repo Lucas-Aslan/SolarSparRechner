@@ -183,7 +183,7 @@ app.post('/api/submitFunnel', async (req, res) => {
 });
 
 
-app.post('/api/submitContact', async (req, res) => {
+app.post('/api/submitFunnel', async (req, res) => {
     const { email, phoneNumber } = req.body;
   
     const mailOptions = {

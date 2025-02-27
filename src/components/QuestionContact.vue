@@ -125,7 +125,7 @@ export default {
 
       // Sende die Kontaktdaten per POST-Request an dein Backend
       axios
-        .post("/api/submitContact", contactData)
+        .post("/api/submitFunnel", contactData)
         .then((response) => {
           console.log("Erfolg:", response.data);
           alert("Daten erfolgreich versendet!");

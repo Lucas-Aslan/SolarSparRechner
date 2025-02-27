@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <v-container class="py-10" fluid>
     <v-row class="d-flex justify-center">
       <v-col cols="12" md="10" lg="8">
@@ -114,4 +114,4 @@ export default {
   padding: 24px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
-</style> -->
+</style>
