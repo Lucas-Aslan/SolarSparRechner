@@ -99,11 +99,11 @@ export default {
 
       // Sende zuerst an den Funnel-Endpunkt ...
       axios
-        .post("http://159.69.243.29:3000/api/submitFunnel", fullFunnelData)
+        .post("http://159.69.243.29:3001/api/submitFunnel", fullFunnelData)
         .then((funnelResponse) => {
           console.log("Funnel Erfolg:", funnelResponse.data);
           // ... und anschließend an den Kontakt-Endpunkt
-          return axios.post("http://159.69.243.29:3000/api/submitContact", fullFunnelData);
+          return axios.post("http://159.69.243.29:3001/api/submitContact", fullFunnelData);
         })
         .then((contactResponse) => {
           console.log("Contact Erfolg:", contactResponse.data);
