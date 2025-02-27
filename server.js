@@ -200,8 +200,6 @@ app.post('/api/submitFunnel', async (req, res) => {
       await transporter.sendMail(mailOptions);
       
       const leadData = {
-        firstName: '',
-        lastName: '',
         fullName: '',
         plz: '',
         stromverbrauch: '',
