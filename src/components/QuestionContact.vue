@@ -86,25 +86,30 @@ export default {
       return /^([a-zA-Z0-9._-]+)@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) || "Ungültige E-Mail-Adresse";
     },
     emitNext() {
-      // Aktualisiere `funnelData` mit den neusten E-Mail- und Telefon-Daten
-      const fullFunnelData = {
-        ...this.funnelData,
-        email: this.email,
-        phoneNumber: this.phoneNumber,
-      };
+  // Vereinige die vorhandenen Funnel-Daten mit den aktuellen Kontaktangaben
+  const fullFunnelData = {
+    ...this.funnelData, // enthält bereits z. B. fullName, plz, stromverbrauch, dachtyp, pkw, street, houseNumber, postalCode, city
+    email: this.email,
+    phoneNumber: this.phoneNumber,
+  };
 
-      // Sende die gesammelten Daten ans Backend
-      axios
-        .post("http://159.69.243.29:3000/api/submitFunnel", fullFunnelData)
-        .then((response) => {
-          console.log("Erfolg:", response.data);
-          alert("Daten erfolgreich versendet!");
-          this.$emit("next", fullFunnelData);
-        })
-        .catch((error) => {
-          console.error("Fehler:", error);
-          alert("Fehler beim Versenden der Daten");
-        });
+// Sende zuerst an den Funnel-Endpunkt
+    axios
+      .post("http://159.69.243.29:3000/api/submitFunnel", fullFunnelData)
+      .then((funnelResponse) => {
+        console.log("Funnel Erfolg:", funnelResponse.data);
+        // Anschließend an den Kontakt-Endpunkt
+        return axios.post("http://159.69.243.29:3000/api/submitContact", fullFunnelData);
+      })
+      .then((contactResponse) => {
+        console.log("Contact Erfolg:", contactResponse.data);
+        alert("Daten erfolgreich versendet!");
+        this.$emit("next", fullFunnelData);
+      })
+      .catch((error) => {
+        console.error("Fehler:", error);
+        alert("Fehler beim Versenden der Daten");
+      });
     },
   },
 };

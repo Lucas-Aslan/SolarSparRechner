@@ -183,36 +183,52 @@ app.post('/api/submitFunnel', async (req, res) => {
 });
 
 
-app.post('/api/submitFunnel', async (req, res) => {
-    const { fullName, email, phoneNumber } = req.body;
+app.post('/api/submitContact', async (req, res) => {
+    const {
+      fullName,
+      plz,
+      stromverbrauch,
+      dachtyp,
+      pkw,
+      email,
+      phoneNumber,
+      street,
+      houseNumber,
+      postalCode,
+      city,
+    } = req.body;
   
     const mailOptions = {
       from: '"Solarrex Contact" <info@solarrex.de>',
       to: 'info@solarrex.de',
       subject: 'Neue Kontaktanfrage',
       text: `
-        fullName: ${fullName}
+        Name: ${fullName || 'k.A.'}
+        PLZ: ${plz || 'k.A.'}
+        Stromverbrauch: ${stromverbrauch || 'k.A.'}
+        Dachtyp: ${dachtyp || 'k.A.'}
+        PKW-Fahrleistung: ${pkw || 'k.A.'}
         E-Mail: ${email}
         Telefon: ${phoneNumber}
+        Adresse: ${street || 'k.A.'} ${houseNumber || 'k.A.'}, ${postalCode || 'k.A.'} ${city || 'k.A.'}
       `,
     };
   
     try {
       await transporter.sendMail(mailOptions);
-      
+  
       const leadData = {
-        fullName: '',
-        plz: '',
-        stromverbrauch: '',
-        dachtyp: '',
-        pkw: '',
+        fullName,
+        plz,
+        stromverbrauch,
+        dachtyp,
+        pkw,
         email,
-        phone: '',
         phoneNumber,
-        street: '',
-        houseNumber: '',
-        postalCode: '',
-        city: '',
+        street,
+        houseNumber,
+        postalCode,
+        city,
       };
   
       await addLeadToExcel(leadData, 'Contact');
@@ -222,6 +238,7 @@ app.post('/api/submitFunnel', async (req, res) => {
       res.status(500).json({ message: 'Fehler beim Versenden der Kontaktanfrage.' });
     }
   });
+  
   
 
 app.listen(PORT, () => {
