@@ -91,6 +91,10 @@ export default {
     ...this.funnelData, // enthält bereits z. B. fullName, plz, stromverbrauch, dachtyp, pkw, street, houseNumber, postalCode, city
     email: this.email,
     phoneNumber: this.phoneNumber,
+    street: this.funnelData.street || '',
+    houseNumber: this.funnelData.houseNumber || '',
+    postalCode: this.funnelData.postalCode || '',
+    city: this.funnelData.city || '',
   };
 
 // Sende zuerst an den Funnel-Endpunkt
