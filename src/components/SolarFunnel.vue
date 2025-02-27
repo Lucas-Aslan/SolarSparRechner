@@ -164,6 +164,7 @@ export default {
           this.funnelData
         );
         if (response.status === 200) {
+          alert("Daten erfolgreich verschickt!");
         } else {
           alert("Fehler beim Versenden der Daten.");
         }

@@ -130,7 +130,6 @@ export default {
         .post("/api/submitContact", contactData)
         .then((response) => {
           console.log("Erfolg:", response.data);
-          alert("Daten erfolgreich versendet!");
           this.$emit("next", contactData);
         })
         .catch((error) => {
