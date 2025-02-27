@@ -183,18 +183,34 @@ app.post('/api/submitFunnel', async (req, res) => {
     }
 });
 
-// Neuer Endpunkt für reine Kontaktanfragen (E-Mail + Telefonnummer)
 app.post('/api/submitContact', async (req, res) => {
-    const { fullName, email, phoneNumber } = req.body;
+    const {
+      fullName,
+      plz,
+      stromverbrauch,
+      dachtyp,
+      pkw,
+      email,
+      phoneNumber,
+      street,
+      houseNumber,
+      postalCode,
+      city,
+    } = req.body;
   
     const mailOptions = {
       from: '"Solarrex Contact" <info@solarrex.de>',
       to: 'info@solarrex.de',
       subject: 'Neue Kontaktanfrage',
       text: `
-        fullName: ${fullName}
+        Name: ${fullName || 'Nicht angegeben'}
+        PLZ: ${plz || 'Nicht angegeben'}
+        Stromverbrauch: ${stromverbrauch || 'Nicht angegeben'}
+        Dachtyp: ${dachtyp || 'Nicht angegeben'}
+        PKW: ${pkw || 'Nicht angegeben'}
         E-Mail: ${email}
         Telefon: ${phoneNumber}
+        Adresse: ${street || 'Nicht angegeben'} ${houseNumber || ''}, ${postalCode || ''} ${city || ''}
       `,
     };
   
@@ -202,18 +218,18 @@ app.post('/api/submitContact', async (req, res) => {
       await transporter.sendMail(mailOptions);
       
       const leadData = {
-        fullName: '',
-        plz: '',
-        stromverbrauch: '',
-        dachtyp: '',
-        pkw: '',
+        fullName: fullName || '',
+        plz: plz || '',
+        stromverbrauch: stromverbrauch || '',
+        dachtyp: dachtyp || '',
+        pkw: pkw || '',
         email,
         phone: '',
         phoneNumber,
-        street: '',
-        houseNumber: '',
-        postalCode: '',
-        city: '',
+        street: street || '',
+        houseNumber: houseNumber || '',
+        postalCode: postalCode || '',
+        city: city || '',
       };
   
       await addLeadToExcel(leadData, 'Contact');
@@ -223,6 +239,7 @@ app.post('/api/submitContact', async (req, res) => {
       res.status(500).json({ message: 'Fehler beim Versenden der Kontaktanfrage.' });
     }
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server laeuft auf http://localhost:${PORT}`);

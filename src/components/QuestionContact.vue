@@ -90,6 +90,12 @@
 import axios from "axios";
 
 export default {
+  props: {
+    funnelData: {
+      type: Object,
+      default: () => ({})
+    }
+  },
   data() {
     return {
       phoneNumber: "",
@@ -106,23 +112,20 @@ export default {
   },
   methods: {
     validatePhone(value) {
-      return (
-        /^\+?[0-9 ]+$/.test(value) || "Ungültige Telefonnummer"
-      );
+      return /^\+?[0-9 ]+$/.test(value) || "Ungültige Telefonnummer";
     },
     validateEmail(value) {
-      return (
-        /^([a-zA-Z0-9._-]+)@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) ||
-        "Ungültige E-Mail-Adresse"
-      );
+      return /^([a-zA-Z0-9._-]+)@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value) || "Ungültige E-Mail-Adresse";
     },
     emitNext() {
+      // Hier werden die bereits gesammelten Daten (funnelData) mit den neuen Kontaktfeldern gemerged.
       const contactData = {
+        ...this.funnelData,
         email: this.email,
-        phoneNumber: this.phoneNumber,
+        phoneNumber: this.phoneNumber
       };
 
-      // Sende die Kontaktdaten per POST-Request an den neuen Endpunkt /api/submitContact
+      // Sende das komplette Datenpaket an den Endpunkt /api/submitContact
       axios
         .post("/api/submitContact", contactData)
         .then((response) => {
